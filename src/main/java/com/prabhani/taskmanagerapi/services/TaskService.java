@@ -1,27 +1,34 @@
 package com.prabhani.taskmanagerapi.services;
 
+import com.prabhani.taskmanagerapi.dao.TaskRepository;
 import com.prabhani.taskmanagerapi.entities.Task;
+import com.prabhani.taskmanagerapi.exception.TaskNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 @Service
 public class TaskService {
 
-    private ConcurrentHashMap tasks;
+    @Autowired
+    TaskRepository taskRepository;
 
-    {
-        tasks = new ConcurrentHashMap<Integer,Task>();
+
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
-    public List<Task> getAllTasks(){
-        tasks.put(1, new Task("Eat"));
-        List<Task> allTasks = new ArrayList<Task>();
-        allTasks.addAll(tasks.values());
-        return allTasks;
+    @Cacheable("tasks")
+    public Task getTaskDetailByName(String taskName) {
+        Task task = taskRepository.findByName(taskName);
+        if (task == null) {
+            throw new TaskNotFoundException();
+        }
+        return task;
     }
+
 
 }
