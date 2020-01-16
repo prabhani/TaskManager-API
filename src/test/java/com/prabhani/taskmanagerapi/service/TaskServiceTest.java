@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 import static org.mockito.BDDMockito.given;
 
@@ -29,13 +29,14 @@ public class TaskServiceTest {
     @Test
     public void getTaskDetails_returnsTaskInfo(){
        given(taskRepository.findByName("cleaningHouse")).willReturn(new Task("cleaningHouse"));
-
        Task task = taskService.getTaskDetailByName("cleaningHouse");
        Assertions.assertThat(task.getName()).isEqualTo("cleaningHouse");
     }
 
     @Test(expected= TaskNotFoundException.class)
-    public void getTaskDetail_whenCarNotFound(){
+    public void getTaskDetail_whenTaskNotFound(){
       given(taskRepository.findByName("running")).willReturn(null);
+        taskService.getTaskDetailByName("running");
     }
+
 }
