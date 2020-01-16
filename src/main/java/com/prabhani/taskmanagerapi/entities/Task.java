@@ -1,29 +1,37 @@
 package com.prabhani.taskmanagerapi.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Task {
-
-    private int taskId;
-    private String taskName;
+    @Id
+    @GeneratedValue
+    private int id;
+    private String name;
     private Date startDateTime;
     private Date endDateTime;
     private String status;
 
-    public Task(String taskName, Date startDateTiem, String status) {
-        this.taskName = taskName;
+    protected Task() {
+    }
+
+    public Task(String name, Date startDateTiem, String status) {
+        this.name = name;
         this.startDateTime = startDateTiem;
         this.status = status;
     }
 
-    public Task(String taskName) {
-        this.taskName = taskName;
+    public Task(String name) {
+        this.name = name;
         this.startDateTime = new Date();
-        this.status = TaskStatus.STARTED.name();
+        this.status = TaskStatus.NOT_STARTED.name();
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setStartDateTime(Date startDateTime) {
@@ -38,12 +46,12 @@ public class Task {
         this.status = status;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getId() {
+        return id;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
     public Date getStartDateTime() {

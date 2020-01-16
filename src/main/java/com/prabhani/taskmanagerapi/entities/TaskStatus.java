@@ -1,5 +1,5 @@
 package com.prabhani.taskmanagerapi.entities;
 
 public enum TaskStatus {
-    NOTSTARTED,STARTED,INPROGRESS,PAUSED,FINISHED;
+    NOT_STARTED,STARTED,IN_PROGRESS,PAUSED,FINISHED;
 }
